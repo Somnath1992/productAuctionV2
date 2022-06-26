@@ -4,7 +4,25 @@ server:
 spring:
   application:
     name: gateway-application
+  cloud:
+    gateway:
+      routes:
+        - id: query-application
+          uri: lb://QUERY-APPLICATION
+          predicates:
+            - Path=/api/v1/productLookup/**
+      globalcors:
+        cors-configurations:
+          '[/api/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://localhost:8761/eureka/
